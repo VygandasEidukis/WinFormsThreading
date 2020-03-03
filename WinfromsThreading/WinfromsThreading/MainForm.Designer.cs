@@ -1,4 +1,6 @@
-﻿namespace WinfromsThreading
+﻿using System;
+
+namespace WinfromsThreading
 {
     partial class MainForm
     {
@@ -113,12 +115,12 @@
             this.Controls.Add(this.btn_Start);
             this.Controls.Add(this.lv_Data);
             this.Name = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.slider_ThreadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.ListView lv_Data;

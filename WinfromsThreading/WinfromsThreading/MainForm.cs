@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,8 +10,8 @@ namespace WinfromsThreading
 {
     public partial class MainForm : Form
     {
+        private CancellationTokenSource _dataGeneratingSource;
         private const int _maxDataCount = 20;
-        private CancellationTokenSource _source;
         private bool _isStarted;
         public bool IsStarted
         {
@@ -22,22 +23,41 @@ namespace WinfromsThreading
             }
         }
 
+        private List<ThreadDto> _bufferedData { get; set; } = new List<ThreadDto>();
+
         public MainForm()
         {
             InitializeComponent();
             BindValuesToUI();
         }
 
-        private void InsertThreadData(ThreadDto threadDto)
+        private async void BufferedSaveData()
         {
+            //save data every second
+            Thread.Sleep(1000);
+
+            List<ThreadDto> threadDtos = new List<ThreadDto>();
+            threadDtos.AddRange(_bufferedData);
+
             AccessContext accessContext = new AccessContext();
-            accessContext.Insert(threadDto);
+            await accessContext.InsertMultiple(threadDtos);
+
+            for (int i = 0; i < threadDtos.Count; i++)
+            {
+                _bufferedData.Remove(threadDtos[i]);
+            }
+
+            if(IsStarted)
+                BufferedSaveData();
         }
 
         private void Start(int threadCount, CancellationToken token)
         {
             DataGenerator dataGenerator = new DataGenerator(threadCount, token);
             dataGenerator.populateData += PopulateData;
+            Thread dataSavingThread = new Thread(BufferedSaveData);
+
+            dataSavingThread.Start();
             dataGenerator.StartThreads();
         }
 
@@ -62,23 +82,21 @@ namespace WinfromsThreading
         {
             IsStarted = true;
             int threadCount = slider_ThreadCount.Value;
-            _source = new CancellationTokenSource();
+            _dataGeneratingSource = new CancellationTokenSource();
 
-            Task thread = new Task(()=>Start(threadCount, _source.Token), _source.Token);
+            Task thread = new Task(()=>Start(threadCount, _dataGeneratingSource.Token), _dataGeneratingSource.Token);
             thread.Start();
         }
 
         private void btn_Stop_Click(object sender, EventArgs e)
         {
             IsStarted = false;
-            _source.Cancel();
+            _dataGeneratingSource.Cancel();
         }
 
         public void PopulateData(ThreadDto dto)
         {
-            Task insertTask = new Task(() => InsertThreadData(dto));
-            insertTask.Start();
-
+            _bufferedData.Add(dto);
 
             ListViewItem item = new ListViewItem(dto.ThreadID.ToString());
             item.SubItems.Add(dto.Text);
@@ -95,8 +113,14 @@ namespace WinfromsThreading
             }
             catch 
             {
-                _source.Cancel();
+                _dataGeneratingSource.Cancel();
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _isStarted = false;
+            _dataGeneratingSource.Cancel();
         }
         #endregion
     }
