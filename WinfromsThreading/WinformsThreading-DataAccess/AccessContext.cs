@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Threading.Tasks;
@@ -31,7 +30,7 @@ namespace WinformsThreading_DataAccess
                     command.Parameters.Add("@tID", OleDbType.Integer).Value = t.ThreadID;
                     command.Parameters.Add("@date", OleDbType.Date).Value = t.CurrentDate;
                     command.Parameters.Add("@text", OleDbType.VarChar).Value = t.Text; 
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
             finally
