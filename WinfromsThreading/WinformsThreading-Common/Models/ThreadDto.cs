@@ -9,5 +9,16 @@ namespace WinformsThreading_Common.Models
         public int ID { get; set; }
         public int ThreadID { get; set; }
         public string Text { get; set; }
+
+        public ThreadDto(int threadID, string text)
+        {
+            ThreadID = threadID;
+            Text = text;
+        }
+
+        public ThreadDto()
+        {
+
+        }
     }
 }

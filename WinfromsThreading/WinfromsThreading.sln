@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformsThreading-UI", "Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinformsThreading-Common", "WinformsThreading-Common\WinformsThreading-Common.csproj", "{7B1F8C7F-FD7A-49AC-B084-84A7F5E39261}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinformsThreading-DataAccess", "WinformsThreading-DataAccess\WinformsThreading-DataAccess.csproj", "{9B0036DA-07DC-40AA-A9D5-EA570FBB0C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7B1F8C7F-FD7A-49AC-B084-84A7F5E39261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B1F8C7F-FD7A-49AC-B084-84A7F5E39261}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B1F8C7F-FD7A-49AC-B084-84A7F5E39261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0036DA-07DC-40AA-A9D5-EA570FBB0C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0036DA-07DC-40AA-A9D5-EA570FBB0C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0036DA-07DC-40AA-A9D5-EA570FBB0C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0036DA-07DC-40AA-A9D5-EA570FBB0C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

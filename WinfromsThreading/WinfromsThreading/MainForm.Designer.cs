@@ -28,22 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lv_Data = new System.Windows.Forms.ListView();
             this.btn_Start = new System.Windows.Forms.Button();
             this.btn_Stop = new System.Windows.Forms.Button();
             this.slider_ThreadCount = new System.Windows.Forms.TrackBar();
             this.label_SliderNumber = new System.Windows.Forms.Label();
+            this.ThreadID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Text = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.slider_ThreadCount)).BeginInit();
             this.SuspendLayout();
             // 
-            // listView1
+            // lv_Data
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(12, 12);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(776, 397);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.lv_Data.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ThreadID,
+            this.Text});
+            this.lv_Data.FullRowSelect = true;
+            this.lv_Data.HideSelection = false;
+            this.lv_Data.Location = new System.Drawing.Point(12, 12);
+            this.lv_Data.Name = "lv_Data";
+            this.lv_Data.Size = new System.Drawing.Size(776, 397);
+            this.lv_Data.TabIndex = 0;
+            this.lv_Data.UseCompatibleStateImageBehavior = false;
+            this.lv_Data.View = System.Windows.Forms.View.Details;
             // 
             // btn_Start
             // 
@@ -86,6 +93,15 @@
             this.label_SliderNumber.TabIndex = 4;
             this.label_SliderNumber.Text = "0";
             // 
+            // ThreadID
+            // 
+            this.ThreadID.Text = "ThreadID";
+            // 
+            // Text
+            // 
+            this.Text.Text = "Data";
+            this.Text.Width = 712;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -95,9 +111,8 @@
             this.Controls.Add(this.slider_ThreadCount);
             this.Controls.Add(this.btn_Stop);
             this.Controls.Add(this.btn_Start);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.lv_Data);
             this.Name = "MainForm";
-            this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.slider_ThreadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -106,11 +121,13 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lv_Data;
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.Button btn_Stop;
         private System.Windows.Forms.TrackBar slider_ThreadCount;
         private System.Windows.Forms.Label label_SliderNumber;
+        private System.Windows.Forms.ColumnHeader ThreadID;
+        private System.Windows.Forms.ColumnHeader Text;
     }
 }
 

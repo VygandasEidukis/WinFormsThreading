@@ -79,5 +79,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinformsThreading-Common\WinformsThreading-Common.csproj">
+      <Project>{7b1f8c7f-fd7a-49ac-b084-84a7f5e39261}</Project>
+      <Name>WinformsThreading-Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

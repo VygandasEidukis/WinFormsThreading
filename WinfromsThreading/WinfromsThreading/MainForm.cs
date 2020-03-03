@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinformsThreading_Common.Models;
 
 namespace WinfromsThreading
 {
     public partial class MainForm : Form
     {
+        private const int _maxDataCount = 20;
         private CancellationTokenSource _source;
         private bool _isStarted;
         public bool IsStarted
@@ -33,13 +29,9 @@ namespace WinfromsThreading
 
         private void Start(int threadCount, CancellationToken token)
         {
-            Thread.Sleep(2000);
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
-                
-            MessageBox.Show("test");
+            DataGenerator dataGenerator = new DataGenerator(threadCount, token);
+            dataGenerator.populateData += PopulateData;
+            dataGenerator.StartThreads();
         }
 
         private void BindValuesToUI()
@@ -64,6 +56,7 @@ namespace WinfromsThreading
             IsStarted = true;
             int threadCount = slider_ThreadCount.Value;
             _source = new CancellationTokenSource();
+
             Task thread = new Task(()=>Start(threadCount, _source.Token), _source.Token);
             thread.Start();
         }
@@ -72,6 +65,25 @@ namespace WinfromsThreading
         {
             IsStarted = false;
             _source.Cancel();
+        }
+
+        public void PopulateData(ThreadDto dto)
+        {
+            ListViewItem item = new ListViewItem(dto.ThreadID.ToString());
+            item.SubItems.Add(dto.Text);
+
+            this.Invoke((MethodInvoker)(
+                () =>
+                {
+                    lv_Data.Items.Add(item);
+
+                    if (lv_Data.Items.Count > _maxDataCount)
+                    {
+                        lv_Data.Items.Remove(lv_Data.Items[0]);
+                    }
+                }));
+
+            
         }
         #endregion
     }
