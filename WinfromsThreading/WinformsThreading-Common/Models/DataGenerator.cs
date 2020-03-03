@@ -36,13 +36,11 @@ namespace WinformsThreading_Common.Models
                 if (_token.IsCancellationRequested)
                     return;
 
-                foreach (var index in _threadsToReset)
+                for (; _threadsToReset.Count > 0 ;)
                 {
-                    if(!_threads[index].IsAlive)
-                    {
-                        _threads[index] = new Thread(ExecuteThreadTasks);
-                        _threads[index].Start();
-                    }
+                    _threads[_threadsToReset[0]] = new Thread(ExecuteThreadTasks);
+                    _threads[_threadsToReset[0]].Start();
+                    _threadsToReset.RemoveAt(0);
                 }
                 Thread.Sleep(10);
             }

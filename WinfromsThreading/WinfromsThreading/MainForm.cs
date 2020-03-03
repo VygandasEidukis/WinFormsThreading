@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinformsThreading_Common.Models;
+using WinformsThreading_DataAccess;
 
 namespace WinfromsThreading
 {
@@ -25,6 +26,12 @@ namespace WinfromsThreading
         {
             InitializeComponent();
             BindValuesToUI();
+        }
+
+        private void InsertThreadData(ThreadDto threadDto)
+        {
+            AccessContext accessContext = new AccessContext();
+            accessContext.Insert(threadDto);
         }
 
         private void Start(int threadCount, CancellationToken token)
@@ -69,21 +76,27 @@ namespace WinfromsThreading
 
         public void PopulateData(ThreadDto dto)
         {
+            Task insertTask = new Task(() => InsertThreadData(dto));
+            insertTask.Start();
+
+
             ListViewItem item = new ListViewItem(dto.ThreadID.ToString());
             item.SubItems.Add(dto.Text);
 
-            this.Invoke((MethodInvoker)(
+            try
+            {
+                this.Invoke((MethodInvoker)(
                 () =>
                 {
                     lv_Data.Items.Add(item);
-
                     if (lv_Data.Items.Count > _maxDataCount)
-                    {
                         lv_Data.Items.Remove(lv_Data.Items[0]);
-                    }
                 }));
-
-            
+            }
+            catch 
+            {
+                _source.Cancel();
+            }
         }
         #endregion
     }

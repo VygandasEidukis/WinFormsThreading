@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.lv_Data = new System.Windows.Forms.ListView();
+            this.ThreadID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Text = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Start = new System.Windows.Forms.Button();
             this.btn_Stop = new System.Windows.Forms.Button();
             this.slider_ThreadCount = new System.Windows.Forms.TrackBar();
             this.label_SliderNumber = new System.Windows.Forms.Label();
-            this.ThreadID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Text = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.slider_ThreadCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +51,15 @@
             this.lv_Data.TabIndex = 0;
             this.lv_Data.UseCompatibleStateImageBehavior = false;
             this.lv_Data.View = System.Windows.Forms.View.Details;
+            // 
+            // ThreadID
+            // 
+            this.ThreadID.Text = "ThreadID";
+            // 
+            // Text
+            // 
+            this.Text.Text = "Data";
+            this.Text.Width = 712;
             // 
             // btn_Start
             // 
@@ -92,15 +101,6 @@
             this.label_SliderNumber.Size = new System.Drawing.Size(13, 13);
             this.label_SliderNumber.TabIndex = 4;
             this.label_SliderNumber.Text = "0";
-            // 
-            // ThreadID
-            // 
-            this.ThreadID.Text = "ThreadID";
-            // 
-            // Text
-            // 
-            this.Text.Text = "Data";
-            this.Text.Width = 712;
             // 
             // MainForm
             // 
