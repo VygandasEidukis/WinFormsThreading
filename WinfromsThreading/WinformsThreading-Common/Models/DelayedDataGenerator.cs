@@ -8,6 +8,7 @@ namespace WinformsThreading_Common.Models
     {
         public delegate void PopulateData(ThreadDto data);
         public PopulateData populateData;
+        Random random = new Random((int)DateTime.Now.Ticks);
 
         private int _maxThreadCount { get; set; }
         private CancellationToken _token { get; set; }
@@ -86,7 +87,6 @@ namespace WinformsThreading_Common.Models
 
         private int GetRandom(int min, int max)
         {
-            Random random = new Random((int)DateTime.Now.Ticks);
             return random.Next(min, max);
         }
     }
