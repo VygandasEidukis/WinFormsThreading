@@ -31,6 +31,17 @@ namespace WinfromsThreading
             BindValuesToUI();
         }
 
+        private void Start(int threadCount, CancellationToken token)
+        {
+            DelayedDataGenerator dataGenerator = new DelayedDataGenerator(threadCount, token);
+            dataGenerator.populateData += PopulateData;
+
+            Thread dataSavingThread = new Thread(BufferedSaveData);
+
+            dataSavingThread.Start();
+            dataGenerator.ExecuteThreads();
+        }
+
         private async void BufferedSaveData()
         {
             //save data every second
@@ -47,29 +58,9 @@ namespace WinfromsThreading
                 _bufferedData.Remove(threadDtos[i]);
             }
 
-            if(IsStarted)
+            //loops untill software is paused/closed
+            if (IsStarted)
                 BufferedSaveData();
-        }
-
-        private void Start(int threadCount, CancellationToken token)
-        {
-            DataGenerator dataGenerator = new DataGenerator(threadCount, token);
-            dataGenerator.populateData += PopulateData;
-            Thread dataSavingThread = new Thread(BufferedSaveData);
-
-            dataSavingThread.Start();
-            dataGenerator.ExecuteThreads();
-        }
-
-        private void BindValuesToUI()
-        {
-            label_SliderNumber.Text = slider_ThreadCount.Value.ToString();
-        }
-        private void UIStateChange()
-        {
-            btn_Start.Enabled = !IsStarted;
-            slider_ThreadCount.Enabled = !IsStarted;
-            btn_Stop.Enabled = IsStarted;
         }
 
         #region events
@@ -122,6 +113,18 @@ namespace WinfromsThreading
             _isStarted = false;
             if(_dataGeneratingSource != null)
                 _dataGeneratingSource.Cancel();
+        }
+
+        private void BindValuesToUI()
+        {
+            label_SliderNumber.Text = slider_ThreadCount.Value.ToString();
+        }
+
+        private void UIStateChange()
+        {
+            btn_Start.Enabled = !IsStarted;
+            slider_ThreadCount.Enabled = !IsStarted;
+            btn_Stop.Enabled = IsStarted;
         }
         #endregion
     }

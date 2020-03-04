@@ -4,14 +4,13 @@ using System.Threading;
 
 namespace WinformsThreading_Common.Models
 {
-    public class DataGenerator
+    public class DelayedDataGenerator
     {
         public delegate void PopulateData(ThreadDto data);
         public PopulateData populateData;
 
         private int _maxThreadCount { get; set; }
         private CancellationToken _token { get; set; }
-        private Random _random { get; set; } = new Random((int)DateTime.Now.Ticks);
         private List<int> _threadsToReset = new List<int>();
         private List<Thread> _threads { get; set; }
 
@@ -20,7 +19,7 @@ namespace WinformsThreading_Common.Models
         public static int MinLength { get; set; } = 5;
         public static int MaxLength { get; set; } = 10;
 
-        public DataGenerator(int threadCount, CancellationToken token)
+        public DelayedDataGenerator(int threadCount, CancellationToken token)
         {
             _token = token;
             _maxThreadCount = threadCount;
@@ -36,6 +35,7 @@ namespace WinformsThreading_Common.Models
                 if (_token.IsCancellationRequested)
                     return;
 
+                //when thread finishes task, it will be reset here in order
                 for (; _threadsToReset.Count > 0 ;)
                 {
                     _threads[_threadsToReset[0]] = new Thread(ExecuteThreadTasks);
@@ -86,7 +86,8 @@ namespace WinformsThreading_Common.Models
 
         private int GetRandom(int min, int max)
         {
-            return _random.Next(min, max);
+            Random random = new Random((int)DateTime.Now.Ticks);
+            return random.Next(min, max);
         }
     }
 }
