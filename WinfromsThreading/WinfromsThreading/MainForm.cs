@@ -58,7 +58,7 @@ namespace WinfromsThreading
             Thread dataSavingThread = new Thread(BufferedSaveData);
 
             dataSavingThread.Start();
-            dataGenerator.StartThreads();
+            dataGenerator.ExecuteThreads();
         }
 
         private void BindValuesToUI()
@@ -120,7 +120,8 @@ namespace WinfromsThreading
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _isStarted = false;
-            _dataGeneratingSource.Cancel();
+            if(_dataGeneratingSource != null)
+                _dataGeneratingSource.Cancel();
         }
         #endregion
     }

@@ -27,7 +27,7 @@ namespace WinformsThreading_Common.Models
             _threads = new List<Thread>();
         }
 
-        public void StartThreads()
+        public void ExecuteThreads()
         {
             PrepareThreads();
 
