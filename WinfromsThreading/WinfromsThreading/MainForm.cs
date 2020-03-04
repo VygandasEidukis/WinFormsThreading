@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using WinformsThreading_Common.Models;
 using WinformsThreading_DataAccess;
 
-namespace WinfromsThreading
+namespace WinformsThreading
 {
     public partial class MainForm : Form
     {

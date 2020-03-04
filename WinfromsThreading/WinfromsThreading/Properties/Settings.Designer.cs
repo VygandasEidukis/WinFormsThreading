@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WinfromsThreading.Properties
+namespace WinformsThreading.Properties
 {
 
 

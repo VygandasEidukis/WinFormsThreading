@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WinfromsThreading
+namespace WinformsThreading
 {
     partial class MainForm
     {
